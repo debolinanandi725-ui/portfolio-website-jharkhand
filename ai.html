@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jharkhand Trip Planner</title>
+
+  <!-- Tailwind (optional) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- External stylesheet -->
+  <link rel="stylesheet" href="ai.css" />
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+  <div class="container mx-auto max-w-4xl bg-white rounded-2xl card p-8 fade-in">
+    <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">AI-Powered Trip Planner for Jharkhand</h1>
+
+    <div class="mb-8">
+      <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e32ad33f-4df6-4353-804e-31d2c1560004.png"
+           alt="Panoramic view of Jharkhand"
+           class="w-full h-64 object-cover rounded-lg mb-4" />
+      <p class="text-gray-600 text-center">Explore the heart of India's tribal culture and natural wonders with personalized AI suggestions tailored to your preferences.</p>
+    </div>
+
+    <form id="tripForm" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div>
+        <label for="budget" class="block text-sm font-medium mb-2">Budget (INR)</label>
+        <input type="number" id="budget" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-2">Interests</label>
+        <div class="space-y-2">
+          <label class="flex items-center"><input type="checkbox" value="wildlife" class="mr-2">Wildlife & Nature</label>
+          <label class="flex items-center"><input type="checkbox" value="culture" class="mr-2">Culture & Heritage</label>
+          <label class="flex items-center"><input type="checkbox" value="adventure" class="mr-2">Adventure & Trekking</label>
+          <label class="flex items-center"><input type="checkbox" value="relax" class="mr-2">Relaxation & Wellness</label>
+        </div>
+      </div>
+
+      <div>
+        <label for="duration" class="block text-sm font-medium mb-2">Duration (Days)</label>
+        <input type="number" id="duration" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+      </div>
+    </form>
+
+    <button type="submit" form="tripForm" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition duration-300 mb-8">
+      Get AI Suggestions
+    </button>
+
+    <div id="suggestions" class="hidden">
+      <div class="suggestion-box p-6 rounded-lg mb-6">
+        <h2 class="text-2xl font-bold mb-4">Your Personalized Trip Plan</h2>
+        <div id="itinerary" class="text-white"></div>
+        <div id="budgetBreakdown" class="mt-6"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Recommended Places</h3>
+          <ul id="places" class="space-y-2"></ul>
+        </div>
+
+        <div>
+          <h3 class="text-xl font-semibold mb-4">Travel Tips</h3>
+          <ul id="tips" class="space-y-2"></ul>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3efbe29d-4164-4f01-89d4-35d2c495aac4.png"
+             alt="Traveler exploring Jharkhand"
+             class="w-full h-64 object-cover rounded-lg" />
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map" class="mt-6" style="height: 400px; width: 100%; border-radius: 12px;"></div>
+  </div>
+
+  <!-- Main JS -->
+  <script src="ai.js"></script>
+
+  <!-- Google Maps API with your API key -->
+  <script async defer 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1y1jhua2iDoijTVG4-Vsg_GaqEhPbJW8&callback=initMap">
+  </script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jharkhand Bus Routes</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #e8f1f5;
+      color: #333;
+    }
+
+    header {
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      padding: 100px 20px;
+      color: white;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 3rem;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    /* Search form styles */
+    #searchForm {
+      margin-bottom: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #searchForm label {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    #searchForm select {
+      padding: 8px 12px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      min-width: 150px;
+    }
+
+    #searchForm button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    #searchForm button:hover {
+      background-color: #1e40af;
+    }
+
+    .routes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .route-card {
+      background: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #e5e7eb;
+    }
+
+    .route-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .route-image img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #2563eb;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+
+    .route-title {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .route-times {
+      color: #4b5563;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
+    }
+
+    .route-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      font-size: 0.85rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .tag.ac {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .tag.non-ac {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .tag.tourist {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .route-price {
+      font-weight: bold;
+      color: #16a34a;
+      margin-top: auto;
+      font-size: 1rem;
+    }
+
+    .view-button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .highlighted-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-left: 0;
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .highlighted-list li {
+      background: #e0f2fe;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
+      font-weight: bold;
+    }
+
+    .route-description {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    /* Footer-style Feature Section */
+    .footer-features {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 30px 20px;
+      background: #f0fdf4;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .feature-box {
+      flex: 1;
+      min-width: 220px;
+      padding: 20px;
+    }
+
+    .feature-box img {
+      width: 40px;
+      margin-bottom: 10px;
+    }
+
+    .feature-box h4 {
+      margin-bottom: 5px;
+    }
+
+    .feature-box p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Jharkhand Bus Routes</h1>
+</header>
+
+<main>
+  <form id="searchForm" aria-label="Search Bus Routes">
+  <label for="fromInput">From:</label>
+  <input list="fromOptions" id="fromInput" name="from" placeholder="Enter starting location" />
+
+  <label for="toInput">To:</label>
+  <input list="toOptions" id="toInput" name="to" placeholder="Enter destination" />
+
+  <datalist id="fromOptions"></datalist>
+  <datalist id="toOptions"></datalist>
+
+  <button type="submit">Search</button>
+</form>
+
+
+  <section class="routes-grid" id="routesGrid"></section>
+</main>
+
+<!-- Feature Section -->
+<section class="footer-features">
+  <div class="feature-box">
+    <img src="https://img.icons8.com/color/48/landscape.png" alt="Scenic" />
+    <h4>Scenic Routes</h4>
+    <p>Enjoy breathtaking views of Jharkhand's hills, forests, and waterfalls along your journey.</p>
+  </div>
+  <div class="feature-box">
+    <img src="https://img.icons8.com/color/48/cheap-2.png" alt="Affordable" />
+    <h4>Affordable Travel</h4>
+    <p>Comfortable bus travel at prices that won't break your travel budget.</p>
+  </div>
+  <div class="feature-box">
+    <img src="https://img.icons8.com/color/48/alarm.png" alt="Frequent" />
+    <h4>Frequent Departures</h4>
+    <p>Multiple daily departures make it easy to plan your Jharkhand adventure.</p>
+  </div>
+</section>
+
+<!-- Modal -->
+<div id="routeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-content">
+    <button class="close-button" id="closeModal" aria-label="Close Modal">&times;</button>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDuration"></p>
+    <p id="modalPrice"></p>
+    <h4>Timings:</h4>
+    <ul id="modalTimings" class="highlighted-list"></ul>
+    <h4>Popular Spots:</h4>
+    <ul id="modalHighlights" class="highlighted-list"></ul>
+    <h4>Route Description:</h4>
+    <div id="modalRouteDesc" class="route-description"></div>
+  </div>
+</div>
+
+<script>
+  const routesData = [
+    {
+  from: "Ranchi",
+  to: "Jamshedpur",
+  duration: "4 hours",
+  price: 480,
+  ac: true,
+  tourist: true,
+  timings: ["6:00 AM", "10:00 AM", "2:00 PM", "6:00 PM"],
+  highlights: ["Dimna Lake", "Jubilee Park", "Tata Steel Plant"],
+  description: "A smooth drive connecting the capital city to the industrial hub through scenic forested routes.",
+  image: "https://s7ap1.scene7.com/is/image/incredibleindia/Cycling-Routes-around-Ranchi9-hero?qlt=82&ts=1726724070623",
+  popular: true
+    },
+    {
+  from: "Jamshedpur",
+  to: "Ranchi",
+  duration: "4 hours",
+  price: 480,
+  ac: true,
+  tourist: true,
+  timings: ["7:30 AM", "11:00 AM", "4:00 PM", "8:00 PM"],
+  highlights: ["Patratu Valley", "Forests", "Roadside Dhabas"],
+  description: "A convenient return journey from Jamshedpur to Ranchi, equally scenic and comfortable.",
+  image: "https://www.constructionworld.in/assets/uploads/536008e804e56376fcd55a8af5399e33.jpg",
+  popular: true
+     },
+    {
+  from: "Netarhat",
+  to: "Ranchi",
+  duration: "6 hours",
+  price: 650,
+  ac: true,
+  tourist: true,
+  timings: ["6:00 AM","12.00 PM","3:00 PM"],
+  highlights: ["Valleys", "Sunset Point"],
+  description: "A peaceful ride back to the capital from the 'Queen of Chotanagpur'.",
+  image: "https://hblimg.mmtcdn.com/content/hubble/img/states_img/mmt/activities/m_Jharkhand_landscape_1_l_562_1000.jpg",
+  popular: true
+},
+{
+  from: "Ranchi",
+  to: "Netarhat",
+  duration: "6 hours",
+  price: 650,
+  ac: true,
+  tourist: true,
+  timings: ["5:00 AM", "1:00 PM","6.30 PM"],
+  highlights: ["Sunrise Point", "Netarhat Dam", "Upper Ghaghri Falls"],
+  description: "A winding journey through hills, forests, and tribal villages. Known for its breathtaking sunrise.",
+  image: "https://static2.tripoto.com/media/filter/tst/img/616229/SpotDocument/1554633108_1554632896986.jpg.webp",
+  popular: true
+},
+    {
+  from: "Bokaro",
+  to: "Dhanbad",
+  duration: "2 hours",
+  price: 200,
+  ac: false,
+  tourist: false,
+  timings: ["8:00 AM", "2:00 PM", "6:00 PM"],
+  highlights: ["Industrial Belt", "Local Food Stops"],
+  description: "Frequent buses available for commuters and students between these industrial hubs.",
+  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJvWL5AVgXhFv6Kng43nIAzr3B65-JSdAPIYMlu7Bea0Q0-9nh9GbsWFYYs0J_de6wX5Y&usqp=CAU",
+  popular: true
+},
+{
+  from: "Dhanbad",
+  to: "Bokaro",
+  duration: "2 hours",
+  price: 200,
+  ac: false,
+  tourist: false,
+  timings: ["9:00 AM", "1:00 PM", "5:00 PM"],
+  highlights: ["Jawaharlal Nehru Park", "City Park", "Bokaro Mall"],
+  description: "A quick and economical route linking two major industrial towns of Jharkhand.",
+  image: "https://upload.wikimedia.org/wikipedia/commons/5/50/Bokaro_Steel_City_at_Night_.jpg",
+  popular: true
+},
+      {
+  from: "Chaibasa",
+  to: "Jamshedpur",
+  duration: "3 hours",
+  price: 300,
+  ac: false,
+  tourist: true,
+  timings: ["8:00 AM", "12:00 PM", "4:00 PM"],
+  highlights: ["Tribal Markets", "Forests", "Cultural Villages"],
+  description: "A tribal heartland route with nature and local culture.",
+  image: "https://i.pinimg.com/736x/f8/80/31/f8803127e77f149a64394fa0fa443d46.jpg",
+  popular: true
+},
+{
+  from: "Jamshedpur",
+  to: "Chaibasa",
+  duration: "3 hours",
+  price: 300,
+  ac: false,
+  tourist: true,
+  timings: ["9:00 AM", "1:30 PM", "7:00 PM"],
+  highlights: ["Botanical Gardens", "Tribal Huts", "Markets"],
+  description: "Return trip through natural and tribal landscapes.",
+  image: "https://mediaim.expedia.com/destination/2/ecb036fe39fb57c661375dc7d4214244.jpg",
+  popular: true
+},
+    {
+  from: "Daltonganj",
+  to: "Ranchi",
+  duration: "5.5 hours",
+  price: 500,
+  ac: true,
+  tourist: false,
+  timings: ["5:30 AM", "12:00 PM"],
+  highlights: ["Palamu Fort", "Betla National Park"],
+  description: "A forested drive from wildlife zones to the capital.",
+  image: "https://www.jagranimages.com/images/newimg/17112019/17_11_2019-15rch201_19765611.jpg",
+  popular: true
+},
+{
+  from: "Ranchi",
+  to: "Daltonganj",
+  duration: "5.5 hours",
+  price: 500,
+  ac: true,
+  tourist: false,
+  timings: ["6:30 AM", "2:30 PM"],
+  highlights: ["Betla National Park", "Palamu Fort", "Sun Temple"],
+  description: "A longer route connecting the capital with Daltonganj, passing historic sites and wildlife reserves.",
+  image: "https://newprojectinformation.com/wp-content/uploads/2022/07/Village-Road-300x169.jpeg",
+  popular: true
+},
+    {
+  from: "Hazaribagh",
+  to: "Giridih",
+  duration: "3 hours",
+  price: 300,
+  ac: false,
+  tourist: true,
+  timings: ["7:00 AM", "11:00 AM", "4:30 PM"],
+  highlights: ["Parasnath Hills", "Forests", "Temples"],
+  description: "Pilgrimage and greenery combine on this route.",
+  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa8H24nR2I3Z_q5SOCj5tRAeAB1OlMBrWGCw&s",
+  popular: true
+},
+{
+  from: "Giridih",
+  to: "Hazaribagh",
+  duration: "3 hours",
+  price: 300,
+  ac: false,
+  tourist: true,
+  timings: ["8:00 AM", "12:00 PM", "5:30 PM"],
+  highlights: ["Hazaribagh National Park", "Parasnath Hills", "Jaina Temple"],
+  description: "A comfortable route for tourists interested in nature and pilgrimage sites.",
+  image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJbQr9BX3hnfntrhkOhiIhT5102-mERC61lA&s",
+  popular: true
+},
+  ];
+
+  const routesGrid = document.getElementById("routesGrid");
+  const modal = document.getElementById("routeModal");
+
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDuration = document.getElementById("modalDuration");
+  const modalPrice = document.getElementById("modalPrice");
+  const modalTimings = document.getElementById("modalTimings");
+  const modalHighlights = document.getElementById("modalHighlights");
+  const modalRouteDesc = document.getElementById("modalRouteDesc");
+
+  const fromSelect = document.getElementById("fromSelect");
+  const toSelect = document.getElementById("toSelect");
+  const searchForm = document.getElementById("searchForm");
+
+  // Populate the "From" and "To" selects with unique locations
+  function populateSelects() {
+  const fromSet = new Set();
+  const toSet = new Set();
+
+  routesData.forEach(route => {
+    fromSet.add(route.from);
+    toSet.add(route.to);
+  });
+
+  const fromOptions = document.getElementById("fromOptions");
+  const toOptions = document.getElementById("toOptions");
+
+  fromSet.forEach(loc => {
+    const option = document.createElement("option");
+    option.value = loc;
+    fromOptions.appendChild(option);
+  });
+
+  toSet.forEach(loc => {
+    const option = document.createElement("option");
+    option.value = loc;
+    toOptions.appendChild(option);
+  });
+}
+
+
+
+  // Render routes to the grid (with optional filtering)
+  function renderRoutes(filter = {}) {
+    routesGrid.innerHTML = "";
+
+    const filteredRoutes = routesData.filter(route => {
+      if (filter.from && route.from !== filter.from) return false;
+      if (filter.to && route.to !== filter.to) return false;
+      return true;
+    });
+
+    if (filteredRoutes.length === 0) {
+      routesGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; font-weight:bold; font-size:1.2rem; color:#777;">No routes found for selected locations.</p>`;
+      return;
+    }
+
+    filteredRoutes.forEach(route => {
+      const card = document.createElement("article");
+      card.className = "route-card";
+
+      const imgWrapper = document.createElement("div");
+      imgWrapper.className = "route-image";
+      const img = document.createElement("img");
+      img.src = route.image;
+      img.alt = `Bus route from ${route.from} to ${route.to}`;
+      imgWrapper.appendChild(img);
+      card.appendChild(imgWrapper);
+
+      if (route.popular) {
+        const badge = document.createElement("div");
+        badge.className = "popular-badge";
+        badge.textContent = "Popular";
+        imgWrapper.style.position = "relative";
+        imgWrapper.appendChild(badge);
+      }
+
+      const content = document.createElement("div");
+      content.style.padding = "15px";
+
+      const title = document.createElement("h3");
+      title.className = "route-title";
+      title.textContent = `${route.from} → ${route.to}`;
+      content.appendChild(title);
+
+      const duration = document.createElement("p");
+      duration.className = "route-times";
+      duration.textContent = `Duration: ${route.duration}`;
+      content.appendChild(duration);
+
+      const tags = document.createElement("div");
+      tags.className = "route-tags";
+
+      const acTag = document.createElement("span");
+      acTag.className = `tag ${route.ac ? "ac" : "non-ac"}`;
+      acTag.textContent = route.ac ? "AC" : "Non-AC";
+      tags.appendChild(acTag);
+
+      if (route.tourist) {
+        const touristTag = document.createElement("span");
+        touristTag.className = "tag tourist";
+        touristTag.textContent = "Tourist Friendly";
+        tags.appendChild(touristTag);
+      }
+
+      content.appendChild(tags);
+
+      const price = document.createElement("p");
+      price.className = "route-price";
+      price.textContent = `₹${route.price}`;
+      content.appendChild(price);
+
+      const viewBtn = document.createElement("button");
+      viewBtn.className = "view-button";
+      viewBtn.textContent = "View Schedule";
+      viewBtn.setAttribute("aria-label", `View schedule for route from ${route.from} to ${route.to}`);
+      viewBtn.addEventListener("click", () => openModal(route));
+      content.appendChild(viewBtn);
+
+      card.appendChild(content);
+      routesGrid.appendChild(card);
+    });
+  }
+
+  // Open modal with route details
+  function openModal(route) {
+    modalTitle.textContent = `${route.from} → ${route.to}`;
+    modalDuration.textContent = `Duration: ${route.duration}`;
+    modalPrice.textContent = `Price: ₹${route.price}`;
+
+    modalTimings.innerHTML = "";
+    route.timings.forEach(time => {
+      const li = document.createElement("li");
+      li.textContent = time;
+      modalTimings.appendChild(li);
+    });
+
+    modalHighlights.innerHTML = "";
+    route.highlights.forEach(spot => {
+      const li = document.createElement("li");
+      li.textContent = spot;
+      modalHighlights.appendChild(li);
+    });
+
+    modalRouteDesc.textContent = route.description;
+
+    modal.style.display = "block";
+    // Focus trap for accessibility
+    document.getElementById("closeModal").focus();
+  }
+
+  // Close modal
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  // Close modal when clicking outside content or pressing ESC
+  window.addEventListener("click", e => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  window.addEventListener("keydown", e => {
+    if (e.key === "Escape" && modal.style.display === "block") {
+      closeModal();
+    }
+  });
+
+  document.getElementById("closeModal").addEventListener("click", closeModal);
+
+  // Handle form submit for filtering
+  searchForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const from = document.getElementById("fromInput").value.trim();
+    const to = document.getElementById("toInput").value.trim();
+
+    renderRoutes({ from, to });
+  });
+
+  // Initial setup
+  populateSelects();
+  renderRoutes();
+
+</script>
+
+</body>
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .book-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .book-btn:hover {
+            background-color: #e03e00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bus Services in Jharkhand</h1>
+    <p>Find your bus and book your tickets easily.</p>
+
+    <!-- Book Tickets Button -->
+    <a href="https://www.redbus.in/" target="_blank" class="book-btn">Book Tickets</a>
+</body>
+</html>
+</html> 

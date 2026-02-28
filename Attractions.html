@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jharkhand Attractions</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- A-Frame for AR/VR -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Explore Attractions in Jharkhand</h1>
+    <p>Discover Nature, Wildlife, Culture & Tribal Life</p>
+  </header>
+
+  <!-- Filter Section -->
+  <section class="filter-bar">
+    <input type="text" id="searchBox" placeholder="Search attractions...">
+    <div class="filters">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="nature">Nature</button>
+      <button class="filter-btn" data-category="wildlife">Wildlife</button>
+      <button class="filter-btn" data-category="culture">Culture</button>
+      <button class="filter-btn" data-category="tribal">Tribal</button>
+    </div>
+  </section>
+
+  <!-- Attractions Grid -->
+  <section class="attractions-grid">
+
+    <div class="card" data-category="nature" data-vr="https://media.assettype.com/outlookindia/import/uploadimage/library/16_9/16_9_5/IMAGE_1654581286.webp?w=801&auto=format%2Ccompress&fit=max&format=webp&dpr=1.0">
+      <img src="https://media.assettype.com/outlookindia/import/uploadimage/library/16_9/16_9_5/IMAGE_1654581286.webp?w=801&auto=format%2Ccompress&fit=max&format=webp&dpr=1.0" alt="Hundru Falls">
+      <h3>Hundru Falls</h3>
+      <p>One of the highest waterfalls in Jharkhand surrounded by lush greenery.</p>
+      <span>📍 Ranchi</span><br>
+      <a href="https://www.google.com/maps?q=Hundru+Falls+Jharkhand" target="_blank" class="map-btn">View on Map</a>
+    </div>
+
+    <div class="card" data-category="nature" data-vr="https://media.tripinvites.com/places/netarhat/upper-ghaghri-waterfalls/upper-ghaghri-waterfalls-featured.jpg">
+      <img src="https://media.tripinvites.com/places/netarhat/upper-ghaghri-waterfalls/upper-ghaghri-waterfalls-featured.jpg" alt="Netarhat Hills">
+      <h3>Netarhat Hills</h3>
+      <p>Known as the Queen of Chotanagpur, famous for sunrise and sunset views.</p>
+      <span>📍 Latehar</span><br>
+      <a href="https://www.google.com/maps?q=Netarhat+Jharkhand" target="_blank" class="map-btn">View on Map</a>
+    </div>
+
+    <div class="card" data-category="wildlife" data-vr="https://india-tours.com/wildlife/images/wildlife/national-parks/betla-national-park.jpg">
+      <img src="https://india-tours.com/wildlife/images/wildlife/national-parks/betla-national-park.jpg" alt="Betla National Park">
+      <h3>Betla National Park</h3>
+      <p>A paradise for wildlife lovers with elephants, tigers and rich flora.</p>
+      <span>📍 Palamu</span><br>
+      <a href="https://www.google.com/maps?q=Betla+National+Park+Jharkhand" target="_blank" class="map-btn">View on Map</a>
+    </div>
+
+    <div class="card" data-category="culture" data-vr="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFt7JavFUPI_LlgfocUislkhtDXDOIGoxxew&s">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFt7JavFUPI_LlgfocUislkhtDXDOIGoxxew&s" alt="Sun Temple">
+      <h3>Sun Temple</h3>
+      <p>Architectural marvel shaped like a giant chariot, surrounded by nature.</p>
+      <span>📍 Ranchi</span><br>
+      <a href="https://www.google.com/maps?q=Sun+Temple+Ranchi" target="_blank" class="map-btn">View on Map</a>
+    </div>
+
+    <div class="card" data-category="tribal" data-vr="https://s7ap1.scene7.com/is/image/incredibleindia/chhau-mask-west-bengal-craft-hero?qlt=82&ts=1726641479790">
+      <img src="https://s7ap1.scene7.com/is/image/incredibleindia/chhau-mask-west-bengal-craft-hero?qlt=82&ts=1726641479790" alt="Chhau Dance">
+      <h3>Chhau Dance</h3>
+      <p>Traditional tribal dance with colorful masks and vibrant energy.</p>
+      <span>📍 Seraikela</span><br>
+      <a href="https://www.google.com/maps?q=Seraikela+Chhau+Dance" target="_blank" class="map-btn">View on Map</a>
+    </div>
+
+  </section>
+
+  <!-- VR Section -->
+  <section class="vr-section" style="margin:50px 0; text-align:center;">
+    <h2>🌏 Virtual 360° Tour of Jharkhand Attractions</h2>
+    <p>Click a card above or use the VR menu below to explore in 360° mode.</p>
+
+    <a-scene embedded style="width:100%; height:500px;">
+      <!-- Default Sky -->
+      <a-sky id="vr-sky" src="https://media.assettype.com/outlookindia/import/uploadimage/library/16_9/16_9_5/IMAGE_1654581286.webp?w=801&auto=format%2Ccompress&fit=max&format=webp&dpr=1.0"></a-sky>
+
+      <!-- Menu of Places -->
+      <a-entity position="0 1.6 -3">
+        <a-plane color="#4CC3D9" height="0.5" width="2" text="value: Hundru Falls; align: center"
+          onclick="document.querySelector('#vr-sky').setAttribute('src','https://media.assettype.com/outlookindia/import/uploadimage/library/16_9/16_9_5/IMAGE_1654581286.webp?w=801&auto=format%2Ccompress&fit=max&format=webp&dpr=1.0')"></a-plane>
+
+        <a-plane color="#EF2D5E" height="0.5" width="2" position="0 -0.7 0"
+          text="value: Netarhat Hills; align: center"
+          onclick="document.querySelector('#vr-sky').setAttribute('src','https://media.tripinvites.com/places/netarhat/upper-ghaghri-waterfalls/upper-ghaghri-waterfalls-featured.jpg')"></a-plane>
+
+        <a-plane color="#FFC65D" height="0.5" width="2" position="0 -1.4 0"
+          text="value: Betla Park; align: center"
+          onclick="document.querySelector('#vr-sky').setAttribute('src','https://india-tours.com/wildlife/images/wildlife/national-parks/betla-national-park.jpg')"></a-plane>
+
+        <a-plane color="#7BC8A4" height="0.5" width="2" position="0 -2.1 0"
+          text="value: Sun Temple; align: center"
+          onclick="document.querySelector('#vr-sky').setAttribute('src','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFt7JavFUPI_LlgfocUislkhtDXDOIGoxxew&s')"></a-plane>
+
+        <a-plane color="#AA66CC" height="0.5" width="2" position="0 -2.8 0"
+          text="value: Chhau Dance; align: center"
+          onclick="document.querySelector('#vr-sky').setAttribute('src','https://s7ap1.scene7.com/is/image/incredibleindia/chhau-mask-west-bengal-craft-hero?qlt=82&ts=1726641479790')"></a-plane>
+      </a-entity>
+
+      <!-- Camera + Cursor -->
+      <a-entity camera look-controls>
+        <a-cursor></a-cursor>
+      </a-entity>
+    </a-scene>
+  </section>
+
+  <script src="script.js"></script>
+
+  <!-- Script to link cards to VR -->
+  <script>
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const vrUrl = card.getAttribute('data-vr');
+        if (vrUrl) {
+          document.querySelector('#vr-sky').setAttribute('src', vrUrl);
+          window.scrollTo({ top: document.querySelector('.vr-section').offsetTop, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

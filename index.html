@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Sign Up</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Identity Services script -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Login / Sign Up</h1>
+    
+    <!-- Google Login Section -->
+    <div class="login-options">
+      <div id="g_id_onload"
+           data-client_id="http://117377760288-eibvtshl3bpov2ppshloo3lq42tr1e1p.apps.googleusercontent.com.apps.googleusercontent.com"
+           data-callback="handleCredentialResponse">
+      </div>
+      <div class="g_id_signin" data-type="standard"></div>
+
+      <div class="divider">
+        <span>Or login with</span>
+      </div>
+
+      <!-- OTP Login Section -->
+      <div class="otp-login">
+        <input type="tel" id="mobile-no" placeholder="Enter mobile no." required>
+        <button id="login-btn">Login / Signup with OTP</button>
+      </div>
+    </div>
+
+    <!-- Skip Login -->
+    <a href="home1.html" class="skip-link">Continue without Login</a>
+  </div>
+
+  <script>
+    // Handle Google Login Response
+    function handleCredentialResponse(response) {
+      console.log("Encoded JWT ID token: " + response.credential);
+      // Here you can send token to backend for verification
+      alert("Google Login Success!");
+    }
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

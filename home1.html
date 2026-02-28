@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jharkhand Eco & Cultural Tourism</title>
+  <link rel="stylesheet" href="home1.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- 🔝 Top Navigation -->
+  <header class="top-nav">
+    <!-- Dashboard / Hamburger Menu -->
+    <button class="nav-item dashboard-icon" aria-label="Dashboard" id="dashboardBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- 🔍 Search Bar -->
+    <div class="search-bar-container">
+      <form action="Attractions.html" method="get" class="search-bar">
+        <input type="text" placeholder="Search for places..." name="query" id="search-input" required>
+        <button type="submit" class="search-icon-btn" aria-label="Search">
+          <i class="fas fa-search search-icon"></i>
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <!-- 🌄 Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Discover Jharkhand's Eco & Cultural Treasures</h1>
+      <p>Explore nature, heritage, and traditions with our smart tourism platform</p>
+      <a href="#features" class="btn-primary">Explore Features</a>
+    </div>
+  </header>
+
+  <!-- 📌 Main Content -->
+  <main>
+    <!-- 🚀 Features -->
+    <section id="features" class="features-section">
+      <h2>Our Platform Features</h2>
+      <div class="features-grid">
+        <!-- Map -->
+        <article class="feature-card">
+          <img src="https://placehold.co/400x250?text=Cultural Documentation" alt="Cultural Documentation" />
+          <h3>Eco Cultural Documentation</h3>
+          <a href="cmap.html">View Cultural Sites</a>
+</a>
+          <p>Discover eco spots, tribal villages, festivals, and heritage sites with virtual tours.</p>
+        </article>
+
+        <!-- Trip Planner -->
+        <article class="feature-card">
+          <img src="https://placehold.co/400x250?text=Trip+Planner" alt="Trip Planner" />
+          <h3>Personalized Trip Planner</h3>
+          <a href="ai.html">Plan with AI</a>
+          <p>Plan your trip based on your budget, interests, and duration with AI-powered suggestions.</p>
+        </article>
+
+        <!-- Marketplace -->
+        <article class="feature-card">
+          <img src="https://placehold.co/400x250?text=Marketplace" alt="Marketplace" />
+          <h3>Community & Artisan Marketplace</h3>
+          <a href="market.html">Visit Marketplace</a>
+          <p>Support local artisans by buying authentic handicrafts and booking homestays.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="call-to-action">
+      <h2>Ready to Explore Jharkhand?</h2>
+      <p>Start planning your eco and cultural adventure today!</p>
+      <a href="tp.html" class="btn-primary">Get Started</a>
+    </section>
+  </main>
+
+  <!-- ⚓ Footer -->
+  <footer>
+    <p>© 2025 Jharkhand Tourism Platform. Promoting sustainable and cultural tourism.</p>
+    <p>Contact: info@jharkhandtourism.org</p>
+  </footer>
+
+  <!-- Sidebar Dashboard -->
+  <nav id="sidebar" class="sidebar">
+    <button class="close-btn" id="closeSidebar">&times;</button>
+    <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+    <a href="wishlist.html"><i class="fas fa-heart"></i> Wishlist</a>
+    <a href="customer.html"><i class="fas fa-headset"></i> Customer Care</a>
+  </nav>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay"></div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>

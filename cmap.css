@@ -1,0 +1,117 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f9f4;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.festival-section {
+  padding: 30px 15px;
+}
+
+h1 {
+  color: #2e7d32;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.festival-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 15px;
+  justify-content: center;
+}
+
+.festival-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  cursor: default;
+  min-width: 250px;
+  padding-bottom: 15px;
+}
+
+.festival-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.festival-card h3 {
+  margin: 12px 0 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.festival-card button {
+  padding: 8px 16px;
+  background-color: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.festival-card button:hover {
+  background-color: #256328;
+}
+
+.festival-card:hover {
+  transform: scale(1.05);
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 8% auto;
+  padding: 25px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.modal-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-top: 15px;
+}
+
+.modal-content ul li {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.close {
+  color: #888;
+  float: right;
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
